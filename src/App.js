@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useContext} from 'react';
+import Sidebar from './components/Sidebar/Sidebar';
+import Modal from './components/Modal/Modal';
+import {AppContext} from './context/context';
+import {FaBars} from '../node_modules/react-icons/fa';
 
-function App() {
+const App = () => {
+
+  const ctx = useContext(AppContext);
+
+  const openModalHandler = () => {
+    ctx.onOpenModal();
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <React.Fragment>
+      <Sidebar />
+      <span onClick={() => ctx.onShowSidebar()} className="show-sidebar__btn"><FaBars /></span>
+      <button onClick={openModalHandler} className="open-modal__btn">Open Modal</button>
+      {ctx.modalState && <Modal />}
+    </React.Fragment>
+  )
 }
 
-export default App;
+export default App
